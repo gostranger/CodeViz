@@ -1,4 +1,3 @@
- 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   hb = new HeadBar();
@@ -14,14 +13,11 @@ function draw() {
   background(255);
   hb.display();
   for(const node in nodeList){
-    if(nodeList[node].name == "rectangle"){
-        fill(color('#FFCD00'))
-        stroke(color('#0016FF'))
-        rect(nodeList[node].x,nodeList[node].y,nodeList[node].w,nodeList[node].h);
-    }
+    nodeList[node].display()
   }
 }
 
+//Mouse Drag Event
 function mouseDragged() {
   if(selected_node!=null){
      nodeList[selected_node].x = mouseX-nodeList[selected_node].x_diff;
@@ -30,8 +26,9 @@ function mouseDragged() {
 
 }
 
+//Mouse Pressed Event
 function mousePressed() {
-  for(const shape in nodeList){
+  for(const node in nodeList){
     let shp_x = nodeList[node].x;
     let shp_y = nodeList[node].y;
     let shp_w = shp_x + nodeList[node].w;
@@ -47,16 +44,19 @@ function mousePressed() {
   }
 }
 
+//Mouse Released Event
 function mouseReleased(){
   selected_node=null;
 }
 
-
+//this the menu bar of the appliction
 class HeadBar{
   constructor(){
     this.base = {w:windowWidth,h:(windowHeight * (5/100)),r:0,g:0,b:0}
     this.operationSelect = createSelect();
     this.selectOptions = {options:["BFS","DFS","Dikstra"],disabled:["Dikstra"]};
+    this.button = createButton('Create Node');
+    this.button.mousePressed(addNode)
   }
 
   display(){
@@ -67,17 +67,27 @@ class HeadBar{
     fill(255,255,255)
     textSize(15)
     text('Operations',10,30);
-    this.operationSelect.position(100,10)
+    this.operationSelect.position(100,10);
+    this.button.position(200,10);
 
   }
 }
 
+//creating Generic Node
 class Node{
-  constructor(){
+  constructor(x,y){
+    this.x = x;
+    this.y = y;
+    this.diameter = 30
+  }
 
+  display(){
+    fill(0,0,0)
+    circle(this.x,this.y,this.diameter)
   }
 }
 
-
-
-
+function addNode(){
+  nodeList.push(new Node(windowWidth/2,windowHeight/2));
+  console.log(nodeList);
+}

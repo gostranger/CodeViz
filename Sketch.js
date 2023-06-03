@@ -63,7 +63,7 @@ function mousePressed() {
       }
     }
     if(temp_node===null){
-      if(multiSelect===undefined)multiSelect.forEach(node=>{nodeList[node].updateSelectNode(false)})
+      nodeList.forEach(node=>{node.updateSelectNode(false)})
       multiSelect=[];
     }
     console.log("multiSelect : "+multiSelect)

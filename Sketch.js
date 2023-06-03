@@ -45,16 +45,23 @@ function mouseDragged() {
 
 //Mouse Pressed Event
 function mousePressed() {
+  var temp_node=null;
   for(const node in nodeList){
      if(nodeList[node].mousePressedEvent(mouseX,mouseY)){
        selected_node = node;
+       temp_node=node;
      }    
     }
     if(keyIsDown(17)){
       if(multiSelect.length==2){
         multiSelect = []
       }
-      multiSelect.push(selected_node);
+      if(multiSelect.indexOf(temp_node)===-1){
+        multiSelect.push(temp_node);
+      }
+    }
+    if(temp_node===null){
+      multiSelect=[]
     }
     console.log("multiSelect : "+multiSelect)
 }

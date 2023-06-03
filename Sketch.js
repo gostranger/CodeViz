@@ -7,6 +7,7 @@ var currNodeType = ""
 var nodeTypeSelect;
 var operationSelect;
 var hb;
+var multiSelect = [];
 function setup() {
   createCanvas(windowWidth, windowHeight);
   hb = new HeadBar();
@@ -47,9 +48,15 @@ function mousePressed() {
   for(const node in nodeList){
      if(nodeList[node].mousePressedEvent(mouseX,mouseY)){
        selected_node = node;
-       return;
      }    
-  }
+    }
+    if(keyIsDown(17)){
+      if(multiSelect.length==2){
+        multiSelect = []
+      }
+      multiSelect.push(selected_node);
+    }
+    console.log("multiSelect : "+multiSelect)
 }
 
 //Mouse Released Event
@@ -61,8 +68,10 @@ function mouseReleased(){
 class HeadBar{
   constructor(){
     this.base = {w:windowWidth,h:(windowHeight * (5/100)),r:0,g:0,b:0}
-    this.button = createButton('Create Node');
-    this.button.mousePressed(addNode);
+    this.buttonNode = createButton('Create Node');
+    this.buttonEdge = createButton('Create Edge');
+    this.buttonNode.mousePressed(addNode);
+    this.buttonEdge.mousePressed(createEdge);
   }
 
   display(){
@@ -71,7 +80,8 @@ class HeadBar{
     fill(255,255,255)
     textSize(15)
     text('Operations',10,30);
-    this.button.position(300,10);
+    this.buttonNode.position(300,10);
+    this.buttonEdge.position(400,10)
   }
 }
 
@@ -90,4 +100,8 @@ addNode = ()=>{
     nodeList.push(new CircleNode(windowWidth/2,windowHeight/2,30));
   }
   console.log(nodeList);
+}
+
+createEdge = () => {
+  
 }

@@ -14,6 +14,7 @@ class Node{
      constructor(xpos,ypos,diameter){
         super(xpos,ypos)
         this.len = diameter
+        this.selectedNode = false;
      }
 
      mouseDraggedEvent(mouseX,mouseY){
@@ -28,8 +29,25 @@ class Node{
       }
      }
 
+     isSelectNode(){
+       return this.selectedNode;
+     }
+
+     updateSelectNode(value){
+       this.selectedNode = value;
+     }
+
      display(){
-        fill(119, 153, 204)
+         if(this.selectedNode){
+            //stroke(220, 220, 220)
+            stroke(0, 0, 0)
+            strokeWeight(3)
+            fill(119, 153, 204)
+         }else{
+            stroke(0, 0, 0)
+            strokeWeight(1)
+            fill(119, 153, 204)
+         }
         circle(this.x,this.y,this.len)
      }
   }

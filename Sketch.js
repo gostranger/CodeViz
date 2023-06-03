@@ -54,14 +54,17 @@ function mousePressed() {
     }
     if(keyIsDown(17)){
       if(multiSelect.length==2){
+        multiSelect.forEach(node=>{nodeList[node].updateSelectNode(false)})
         multiSelect = []
       }
       if(multiSelect.indexOf(temp_node)===-1){
         multiSelect.push(temp_node);
+        if(nodeList[temp_node]!=undefined)nodeList[temp_node].updateSelectNode(true);
       }
     }
     if(temp_node===null){
-      multiSelect=[]
+      if(multiSelect===undefined)multiSelect.forEach(node=>{nodeList[node].updateSelectNode(false)})
+      multiSelect=[];
     }
     console.log("multiSelect : "+multiSelect)
 }
@@ -104,7 +107,7 @@ addNode = ()=>{
   if(currNodeType === "Modern"){
     nodeList.push(new ModernNode(windowWidth/2,windowHeight/2,20,20));
   }else if(currNodeType === "Circle"){
-    nodeList.push(new CircleNode(windowWidth/2,windowHeight/2,30));
+    nodeList.push(new CircleNode(windowWidth/2,windowHeight/2,40));
   }
   console.log(nodeList);
 }
